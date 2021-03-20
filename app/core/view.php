@@ -16,25 +16,43 @@
 	interface iTemplate {
 		function setVariable($name, $var);
 		function getHtml($template);
+		function render($data);
 	}
 
-	class View {
+	class View implements iTemplate {
 
-		private $vars = [];
+		private array $vars = [];
 
 		function setVariable($name, $var) {
 			$this->vars[$name] = $var;
 		}
 
+		/*
+		 * Метод подменяет маркеры в шаблоне,
+		 * {name} обычная переменная
+		 * %{page}% файл вида страницы
+		 */
+
 		function getHtml($template) {
 			foreach($this->vars as $name => $value) {
 				$template = str_replace('{'.$name.'}', $value, $template);
+				if(preg_match("/%[a-z].*\w[a-z]*\.php%/", $template)) {
+                    $template = preg_replace("/%[a-z].*\w[a-z]*\.php%/", file_get_contents('app/views/'.$value), $template);
+                }
 			}
 			return $template;
 		}
 
-		function render($page, $data, $layout = 'default.php') {
-			!is_array($data) ? : extract($data);
-			include 'app/views/templates/'.$layout.'.php';
+		/*
+		 * Метод рендерит html на экран приложения
+		 */
+
+		function render($data) {
+			$layout = file_get_contents('app/views/templates/'.$data['layout']);
+
+			foreach($data as $name => $value) {
+				$this->setVariable($name, $value);
+			}
+			echo $this->getHtml($layout);
 		}
 	}
