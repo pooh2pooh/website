@@ -7,21 +7,22 @@
 	#
 	##
 
-	trait Debug {
+    trait Debug {
 
 		/*
 		 * Настраиваемые переменные,
 		 * для подключения
 		 */
-		private
-			$db_server		= 'localhost',
-			$db_type		= 'mysql',
-			$db_name		= 'project_db',
-			$db_charset 	= 'utf8mb4',
-			$db_user		= 'pooh',
-			$db_pass		= '1234',
+		private string
+			$db_server			= 'localhost',
+			$db_type			= 'mysql',
+			$db_name			= 'project_db',
+			$db_charset			= 'utf8mb4',
+			$db_user			= 'pooh',
+			$db_pass			= '1234';
+		private bool
 			// @Применяется в index.php через bootstrap->run(<debug_mode>)
-			$debug_mode 	= true;
+			$debug_mode			= true;
 
 		// Отправляет ошибку на экран приложения
 		function sendError($error_message, $file_location) {

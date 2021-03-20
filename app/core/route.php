@@ -8,7 +8,7 @@
 
 	class Route {
 
-		static function run() {
+        static function run() {
 
 			// Контроллер и действие по-умолчанию
 			$controller_name	= 'Index';
@@ -42,7 +42,7 @@
 			$controller = new $controller_name;
 			$action = $action_name;
 
-			!method_exists($controller, $action) ? throw new Exception('Не найден метод '.$action.' контроллера '.$controller) : $controller->$action($param);
+			!method_exists($controller, $action) ? throw new Exception('Не найден метод '.$action.' контроллера '.$controller_name) : $controller->$action($param);
 		}
 
 	}
