@@ -1,86 +1,58 @@
-<body class="my-login-page">
-<section class="h-100">
-    <div class="container h-100">
-        <div class="row justify-content-md-center h-100">
-            <div class="card-wrapper">
-                <div class="brand">
-                    <img src="/apple-touch-icon.png" alt="logo">
-                </div>
-                <div class="card fat">
-                    <div class="card-body">
-                        <h4 class="card-title text-center">Авторизация</h4>
-                        <div class="was-validated">
-                            <div class="form-group">
-                                <label for="login">Логин</label>
-                                <input id="login" type="text" class="form-control" name="login" value="" required autofocus>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="password">Пароль
-                                    <a href="#" class="float-right">
-                                        Забыли пароль?
-                                    </a>
-                                </label>
-                                <input id="password" type="password" class="form-control" name="password" required data-eye>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="custom-checkbox custom-control">
-                                <input type="checkbox" name="remember" id="remember" class="custom-control-input">
-                                <label for="remember" class="custom-control-label">Запомнить меня</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group m-0">
-                            <button class="btn btn-primary btn-block" onclick="auth()">
-                                Войти
-                            </button>
-                        </div>
-
-                        <div class="mt-4 text-center">
-                            <div id="status"></div>
-                            <a href="/">&larr; вернуться на главную</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer">
-                    Copyright &copy; 2021 &mdash; <a href="#">Ульяна</a>
-                </div>
-            </div>
-        </div>
+  <link href="/styles/login.css" rel="stylesheet">
+</head>
+<body class="text-center">
+  <main class="form-signin">
+    <img class="mb-4" src="/apple-touch-icon.png" alt="logo" width="72">
+    <h1 class="h3 mb-3 fw-normal">Авторизация</h1>
+    <div class="was-validated">
+      <div class="form-floating">
+        <input id="login" type="text" class="form-control" name="login" value="" placeholder="admin" required autofocus>
+        <label for="login">Логин</label>
+      </div>
+      <div class="form-floating">
+        <input id="password" type="password" class="form-control" name="password" placeholder="Пароль" required data-eye>
+        <label for="password">Пароль</label>
+      </div>
     </div>
-</section>
-</body>
+    <button class="w-100 btn btn-lg btn-primary" onclick="auth()">Войти</button>
+    <div class="mt-4 text-center">
+        <div id="status"></div>
+        <a href="/">&larr; вернуться на главную</a>
+    </div>
+    <p class="mt-5 mb-3 text-muted">
+        Copyright &copy; 2021 &mdash; <a href="#">Ульяна</a>
+    </p>
+  </main>
 
-<script>
+  <script>
     let attempt = 0;
     function auth() {
-		if(attempt > 2) {
-			$('#status').html('<span class="text-danger">Вы не авторизовались!</span>');
-			return;
-		}
-        let login = document.getElementById("login").value;
-        let password = document.getElementById("password").value;
-		$.ajax({
-			type: 'POST',
-			cache: false,
-			dataType: 'json',
-			url: '/index/auth',
-			data: { login: login, password: password },
-			success: function(data) {
-				if(data.result === "success") {
-					$('#status').html('<span class="text-success font-weight-bold">Привет, '+login+'!</span>');
-					setTimeout(function() {
-						window.location.href = window.location.origin+"/auth/dashboard";
-					}, 2000);
-				}
-			},
-			error: function() {
-				$('#status').html('<span class="text-danger">Неверный логин или пароль!</span>');
-				attempt++;
-				// console.log(attempt);
-			}
-		}).done();
-	}
-</script>
+      if(attempt > 2) {
+          $('#status').html('<span class="text-danger">Вы не авторизовались!</span>');
+          return;
+      }
+      let login = document.getElementById("login").value;
+      let password = document.getElementById("password").value;
+      $.ajax({
+          type: 'POST',
+          cache: false,
+          dataType: 'json',
+          url: '/index/auth',
+          data: { login: login, password: password },
+          success: function(data) {
+              if(data.result === 'success') {
+                  $('#status').html('<span class="text-success font-weight-bold">Привет, '+login+'!</span>');
+                  setTimeout(function() {
+                      window.location.href = window.location.origin+"/auth/dashboard";
+                  }, 2000);
+              }
+          },
+          error: function() {
+              $('#status').html('<span class="text-danger">Неверный логин или пароль!</span>');
+              attempt++;
+              // console.log(attempt);
+          }
+      }).done();
+    }
+  </script>
+</body>

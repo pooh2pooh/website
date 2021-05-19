@@ -1,51 +1,38 @@
-<body class="sb-nav-fixed">
-%{header}%
-<div id="layoutSidenav">
-    %{sidenav}%
-    <div id="layoutSidenav_content">
-        <main>
-            <div class="container-fluid my-4">
-                %{toasts}%
-                {editor_content}
-            </div>
-        </main>
-        %{footer}%
+    <link href="/lib/codemirror/codemirror.css" rel="stylesheet">
+    <link href="/lib/codemirror/monokai.css" rel="stylesheet">
+</head>
+<body>
+    %{header}%
+    <main>
+    <div class="container">
+      <div class="row">
+        %{toasts}%
+        <div class="my-5">
+          {editor_content}
+        </div>
+      </div>
     </div>
-</div>
-<script>
-    (function($) {
-        "use strict";
-
-        // Add active state to sidbar nav links
-        var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
-        $("#layoutSidenav_nav .sb-sidenav a.nav-link").each(function() {
-            if (this.href === path) {
-                $(this).addClass("active");
-            }
-        });
-        // Toggle the side navigation
-        $("#sidebarToggle").on("click", function(e) {
-            e.preventDefault();
-            $("body").toggleClass("sb-sidenav-toggled");
-        });
-    })(jQuery);
-    $(document).ready( function () {
-        $('#dataTable').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/Russian.json'
-            }
-        });
-    } );
-</script>
-<script>
+  </main>
+  %{footer}%
+  <!-- CodeMirror JS -->
+  <script src="/lib/codemirror/codemirror.js"></script>
+  <script src="/lib/codemirror/matchbrackets.js"></script>
+  <script src="/lib/codemirror/multiplex.js"></script>
+  <script src="/lib/codemirror/htmlmixed.js"></script>
+  <script src="/lib/codemirror/xml.js"></script>
+  <script src="/lib/codemirror/javascript.js"></script>
+  <script src="/lib/codemirror/css.js"></script>
+  <script src="/lib/codemirror/clike.js"></script>
+  <script src="/lib/codemirror/php.js"></script>
+  <script>
     var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         lineNumbers: true,
         matchBrackets: true,
-        mode: "application/x-httpd-php",
+        mode: 'application/x-httpd-php',
         indentUnit: 4,
         indentWithTabs: true,
-        theme: "monokai",
+        theme: 'monokai',
         viewportMargin: Infinity,
     });
-</script>
+  </script>
 </body>

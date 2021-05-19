@@ -1,12 +1,8 @@
-<footer class="py-4 bg-light mt-auto">
-    <div class="container-fluid">
-        <div class="d-flex align-items-center justify-content-between small">
-            <div class="text-muted">Copyright &copy; 2021 &mdash; <a href="#">Ульяна</a></div>
-            <div>
-                <a href="#">Privacy Policy</a>
-                &middot;
-                <a href="#">Terms &amp; Conditions</a>
-            </div>
-        </div>
-    </div>
+<footer class="text-muted py-5">
+  <div class="container text-center">
+    <p class="float-end mb-1">
+      <a href="#">↑ Вверх</a>
+    </p>
+    <p class="mb-1">&laquo;Ульяна&raquo;, ИИ для бизнеса &copy; 2021</p>
+  </div>
 </footer>

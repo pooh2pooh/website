@@ -27,8 +27,17 @@
 		// Отправляет ошибку на экран приложения
 		function sendError($error_message, $file_location) {
 			$this->debug_mode ? print $file_location : print 'ошибка: Включи debug чтобы получить больше информации';
-			die("<br>" . $error_message);
+			die('<br>' . $error_message);
 		}
+
+		// Обёртка для var_dump,
+        // с форматированием вывода
+        function debug(mixed $var) {
+            echo '<pre>';
+		    var_dump($var);
+            echo '</pre>';
+		    die();
+        }
 	}
 
 	class bootstrap {

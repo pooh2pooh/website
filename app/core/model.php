@@ -29,7 +29,7 @@
 			}
 		}
 
-		function queryBuilder($method = 'update', $tbl_name = 'products'): bool|string {
+		function queryBuilder($method = 'update', $tbl_name = 'products'): bool|string|array {
             // КОНСТРУКТОР ДЛЯ SQL ЗАПРОСА
             $sql            = ''; // запрос
             $table_field    = ''; // список полей таблицы
@@ -40,21 +40,34 @@
                 $sth = $this->db_object->prepare("SHOW COLUMNS FROM $tbl_name");
                 $sth->execute();
                 $tbl_structure = $sth->fetchAll(PDO::FETCH_ASSOC);
-                if(!strcmp($method, 'insert')) {
+                //
+                // Если нужно получить только структуру таблицы,
+                // возвращаем массив с ней сразу
+                if(!strcmp($method, 'structure')) {
+                    return $tbl_structure;
+                }
+                //
+                // Иначе возвращаем готовый запрос,
+                // @ДОБАВИТЬ || ОБНОВИТЬ || УДАЛИТЬ || ВЫБРАТЬ
+                else if (!strcmp($method, 'insert')) {
                     foreach ($tbl_structure as $i => $tbl) {
                         if (!strcmp($tbl['Extra'], 'auto_increment')) continue;
+                        if (!strcmp($tbl['Field'], 'date')) continue;
                         $table_field .= ' ' . $tbl['Field'] . ',';
                         $sql_ph .= ' ?,';
                     }
                     $sql = 'INSERT INTO ' . $tbl_name . ' ' . '(' . mb_substr(trim($table_field), 0, -1) . ') VALUES (' . mb_substr(trim($sql_ph), 0, -1) . ')';
-                } else if(!strcmp($method, 'update')) {
+                } else if (!strcmp($method, 'update')) {
                     foreach ($tbl_structure as $i => $tbl) {
                         if (!strcmp($tbl['Extra'], 'auto_increment')) continue;
+                        if (!strcmp($tbl['Field'], 'date')) continue;
                         $table_field .= ' ' . $tbl['Field'] . ' = ?,';
                     }
                     $sql = 'UPDATE ' . $tbl_name . ' SET ' . mb_substr(trim($table_field), 0, -1) . ' WHERE id = ?';
-                } else if(!strcmp($method, 'delete')) {
+                } else if (!strcmp($method, 'delete')) {
                     $sql = 'DELETE FROM ' . $tbl_name . ' WHERE id = ?';
+                } else if (!strcmp($method, 'select')) {
+                    $sql = 'SELECT * FROM ' . $tbl_name . ' WHERE id = ?';
                 }
                 return $sql;
             } catch(PDOException $e) {
@@ -80,6 +93,22 @@
 		}
 
         /*
+         * Метод возвращает данные одного поля из базы
+         * @аргументы: имя таблицы, идентифиукатор поля
+         */
+        function getDataRow($tbl_name, $id): bool|array
+        {
+            try {
+                $sth = $this->db_object->prepare("SELECT * FROM $tbl_name WHERE id = :id");
+                $sth->execute(array('id' => $id));
+                return $sth->fetchAll(PDO::FETCH_ASSOC);
+            } catch(PDOException $e) {
+                $this->sendError($e->getMessage(), $e->getFile().':'.$e->getLine());
+                return false;
+            }
+        }
+
+        /*
          * Метод изменения данных в базе
          * @аргументы: запрос из queryBuilder, данные
          */
@@ -88,7 +117,7 @@
             try {
                 // Здесь $sql это готовый запрос из метода queryBuilder()
                 $result = $this->db_object->prepare($sql);
-                $result->execute($data);
+                $status = $result->execute($data);
                 return true;
 
             } catch(PDOException $e) {

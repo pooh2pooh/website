@@ -1,73 +1,48 @@
-<body class="sb-nav-fixed">
-    %{header}%
-    <div id="layoutSidenav">
-        %{sidenav}%
-        <div id="layoutSidenav_content">
-            <main>
-                <div class="container-fluid my-4">
-                    %{toasts}%
-                    %{widget_products}%
-                </div>
-            </main>
-            %{footer}%
-        </div>
+    <link href="/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+</head>
+<body>
+  %{header}%
+  <main>
+    %{toasts}%
+    <div class="container">
+      <div class="row">
+        <h1 class="h2 text-center my-4">Сегодня 123<br><span class="text-muted small">Всего 456</span></h1>
+        %{widget_products}%
+      </div>
     </div>
-    <script>
-        function delProduct(id) {
-            $.ajax({
-                type: 'POST',
-                cache: false,
-                dataType: 'json',
-                url: '/auth/dashboard',
-                data: { id: id },
-                success: function(data) {
-                    if(data.result === "success") {
-                        let node = document.querySelector('#id'+id);
-                        node.parentNode.removeChild(node);
-                        $('#status').html('Запись с ID '+id+' удалена!');
-                        $('.toast').toast('show');
-                    }
-                },
-                error: function() {
-                    $('#status').html('error delete id = '+id);
-                }
-            }).done();
-        }
-    </script>
-    <script>
-        (function($) {
-            "use strict";
+  </main>
+  %{footer}%
 
-            // Add active state to sidbar nav links
-            let path = window.location.href; // because the 'href' property of the DOM element is the absolute path
-            $("#layoutSidenav_nav .sb-sidenav a.nav-link").each(function() {
-                if (this.href === path) {
-                    $(this).addClass("active");
+  <script>
+    function delProduct(id) {
+        $.ajax({
+            type: 'POST',
+            cache: false,
+            dataType: 'json',
+            url: '/auth/dashboard',
+            data: { id: id },
+            success: function(data) {
+                if(data.result === "success") {
+                    let node = document.querySelector('#id'+id);
+                    node.parentNode.removeChild(node);
+                    $('#del_toast_text').html('Удалено! (#'+id+')');
+                    $('#delToast').toast('show');
                 }
-            });
-            // Toggle the side navigation
-            $("#sidebarToggle").on("click", function(e) {
-                e.preventDefault();
-                $("body").toggleClass("sb-sidenav-toggled");
-            });
-        })(jQuery);
-        $(document).ready( function () {
-            $('#dataTable').DataTable({
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/Russian.json'
-                }
-            });
-        } );
-    </script>
-    <script>
-        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-            lineNumbers: true,
-            matchBrackets: true,
-            mode: "application/x-httpd-php",
-            indentUnit: 4,
-            indentWithTabs: true,
-            theme: "monokai",
-            viewportMargin: Infinity,
-      });
-    </script>
+            },
+            error: function() {
+               console.log('Ошибка! Нельзя удалить');
+            }
+        }).done();
+    }
+  </script>
+  <script src="/lib/datatables/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready( function () {
+        $('#dataTable').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/Russian.json'
+            }
+        });
+    } );
+  </script>
 </body>

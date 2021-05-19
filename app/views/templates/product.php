@@ -1,15 +1,16 @@
-<div class="col-lg-4 col-md-6 mb-4">
-    <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-        <div class="card-body">
-            <h4 class="card-title">
-                {id} <a href="#">{name}</a>
-            </h4>
-            <h5>$24.99</h5>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+<div class="col">
+  <div class="card shadow-sm">
+    <img src="/images/{picture}">
+
+    <div class="card-body">
+      <p class="card-text">{id}. {name}</p>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="btn-group">
+          <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+          <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
         </div>
-        <div class="card-footer">
-            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-        </div>
+        <small class="text-muted">{date}</small>
+      </div>
     </div>
+  </div>
 </div>

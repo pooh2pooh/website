@@ -1,0 +1,44 @@
+.form-floating:focus-within {
+  z-index: 2;
+}
+
+input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* Image Preview Styles */
+.overlay{
+    position: relative;
+    left: 0;
+    top: 60px;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    background: rgba(255,255,255,0.7);
+}
+.overlay-content {
+    position: absolute;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    top: 50%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #555;
+}
+.uploadProcess img{
+    max-width: 207px;
+    border: none;
+    box-shadow: none;
+    -webkit-border-radius: 0;
+    display: inline;
+}
