@@ -186,8 +186,41 @@
                         'name' => $_POST['name'],
                     );
 
+                    // var_dump ($_POST);
+
+                    $data_new_product = [];
+
+                    //
+                    // Обрабатываем переданные в POST запросе данные,
+                    // и помещаем их в вновь созданный массив.
+                    // Это нужно для сохранения порядка и обработки пустных значений
+                    foreach ($_POST as $name => $value) {
+                        if (!strcmp($name, 'id') || !strcmp($name, 'picture'))
+                            continue;
+                        else if (!strcmp($name, 'name')) {
+                            if (!isset($_POST['picture']))
+                                array_push($data_new_product, $value, NULL);
+                            else
+                                array_push($data_new_product, $value, $_POST['picture']);
+                        }    
+                        else if (!strcmp($name, 'on_main'))
+                            array_push($data_new_product, 1);
+                        else array_push($data_new_product, $value);
+                    }
+
+                    //
+                    // Если не передан параметр чекбокс,
+                    // отображать ли позицию на витрине
+                    if (!isset($_POST['on_main']))
+                        array_push($data_new_product, 0);
+
+                    // var_dump ($_POST);
+
                     $sql = $this->model->queryBuilder('insert');
-                    $this->model->setData($sql, array($_POST['name'], $_POST['picture'], $_POST['price'], $_POST['article'], 1));
+
+                    // var_dump ($sql);
+
+                    $this->model->setData($sql, $data_new_product);
 
                     // Переводим массив в JSON
                     echo json_encode($result);

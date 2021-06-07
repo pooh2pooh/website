@@ -13,7 +13,7 @@
         </div>
         <div class="w-100 btn-group">
           <a class="btn btn-lg btn-light" href="/auth/dashboard">&larr; Управление</a>
-          <a id="submit_productor" class="btn btn-lg btn-dark" href="javascript:void(0)"><i class="fas fa-save mr-1"></i> Сохранить</a>
+          <a id="submit_productor" class="btn btn-lg btn-light fw-bold" href="javascript:void(0)"><i class="fas fa-save mr-1"></i> Сохранить</a>
         </div>
       </div>
     </div>

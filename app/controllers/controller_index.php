@@ -29,6 +29,9 @@
 
 			foreach($data_array as $i => $array) {
 				foreach($array as $name => $value) {
+					if (!strcmp($name, 'picture'))
+						if (is_null($value))
+							$value = 'no-image.png';
 					$this->view->setVariable($name, $value);
 				}
 				$data['products'] .= $this->view->getHtml($data['product_template']);

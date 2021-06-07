@@ -6,15 +6,17 @@
     <meta name="description" content="">
     <meta name="author" content="Pooh Pooh">
     <title>{title}</title>
-      <!-- Bootstrap core CSS -->
-      <link href="/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
-      <!-- Bootstrap core JS -->
-      <script src="/lib/jquery-3.5.1.min.js"></script>
-      <script src="/lib/bootstrap/bootstrap.bundle.min.js"></script>
-      <script src="/lib/fontawesome/all.min.js"></script>
-      
-      %{page}%
+    <!-- Bootstrap core CSS -->
+    <link href="/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <!-- Auth CSS -->
+    <link href="/styles/auth.css" rel="stylesheet">
+    <!-- Bootstrap core JS -->
+    <script src="/lib/jquery-3.5.1.min.js"></script>
+    <script src="/lib/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="/lib/fontawesome/all.min.js"></script>
+    
+    %{page}%
 
-      <!-- /HEAD in PAGE! -->
+    <!-- /HEAD in PAGE! -->
 
 </html>

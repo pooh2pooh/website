@@ -121,7 +121,7 @@
                 	$checked = $values[0][$value['name']] ? 'checked' : '';
                     $form_template .= '
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="'.$value['name'].'" name="'.$value['name'].'" '.$checked.'>
+                            <input class="form-check-input" type="checkbox" id="'.$value['name'].'" name="'.$value['name'].'" value=1 '.$checked.'>
                             <label class="form-check-label" for="'.$value['name'].'">'.$value['name'].'</label>
                         </div>
                     ';
