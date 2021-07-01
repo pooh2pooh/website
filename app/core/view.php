@@ -125,7 +125,7 @@
                             <label class="form-check-label" for="'.$value['name'].'">'.$value['name'].'</label>
                         </div>
                     ';
-                } else if (!strcmp($form_type, 'int') ||
+                } else if (!strcmp($form_type, 'int') || !strcmp($form_type, 'smallint') || 
                     !strcmp($form_type, 'varchar') && strcmp($value['name'], 'picture')) {
                     $form_template .= '
                             <div class="form-floating">
